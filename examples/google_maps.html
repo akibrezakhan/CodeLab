@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple Map</title>
+  <meta name="viewport" content="initial-scale=1.0">
+  <meta charset="utf-8">
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+      height: 80%;
+      margin: 10vh auto;
+      width: 80%;
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <script>
+    var map;
+
+    let BANGLADESH_BOUND = {
+      north: 26.867777,
+      south: 24.112148,
+      east: 180,
+      west: -180
+    }
+
+    function initMap() {
+
+      let mym = {
+        lat: 24.733631,
+        lng: 90.419496
+      }
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: mym, //Where the map is centered
+        zoom: 7.4, //How zoomed the map is
+        //12x is for house
+        //10x is state/region
+        //7x for small - country
+        restriction: {
+          latLangBounds: BANGLADESH_BOUND,
+          strictBound: true
+        }
+
+      });
+
+      let marker = new google.maps.Marker({
+        position: mym,
+        title: 'Mymensingh',
+        label: 'A',
+        animation: google.maps.Animation.DROP,
+        map
+      })
+
+      //Content inside the infowindow
+      let contentString = `<div>Hey there</div>`
+      let inf = new google.maps.InfoWindow({
+        content: contentString
+      })
+      //Add the marker to the marker
+      marker.addListener('click', () => {
+        inf.open(map, marker);
+      })
+
+      //Closes the infoWindow when clicked elsewhere in map
+      map.addListener('click', () => {
+        inf.close();
+      })
+
+    }
+  </script>
+  <!-- Don't forget to change the API KEY -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY
+    &callback=initMap" async defer></script>
+</body>
+
+</html>

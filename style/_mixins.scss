@@ -1,0 +1,6 @@
+// Use style.css if you don't know what scss is
+// Import google fonts  here
+
+@mixin defbdr($col: red) {
+    border: 0.1rem solid $col;
+}
